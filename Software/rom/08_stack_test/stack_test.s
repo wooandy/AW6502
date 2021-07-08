@@ -19,12 +19,12 @@ NPULSE        = %01111111
 
 init:
       lda #%11100000           ; PA5, PA6 and PA7 are outputs
-      sta VIA2_DDRA 
+      sta VIA1_DDRA 
       lda #%11111111           ; PORTB is all output
-      sta VIA2_DDRB
+      sta VIA1_DDRB
       lda #%00000000           ; Initialize port outputs with $00
-      sta VIA2_PORTA
-      sta VIA2_PORTB
+      sta VIA1_PORTA
+      sta VIA1_PORTB
       ldx #$00                 ; Initialize counter (register X)
 loop_init_seq:
       lda lcd_init_sequence,x  ; Fetch data from address lcd_init_sequence + x
@@ -52,19 +52,19 @@ lcd_init_sequence:
       .byte %00000000
 
 send_command:
-      sta VIA2_PORTB           ; Send data to PORTB
+      sta VIA1_PORTB           ; Send data to PORTB
       lda #(COMMAND_MODE | WRITE_MODE | PULSE) ; Set write command mode with active pulse
-      sta VIA2_PORTA
+      sta VIA1_PORTA
       and #NPULSE              ; Disable pulse bit (E) and send to LCD
-      sta VIA2_PORTA
+      sta VIA1_PORTA
       rts
 
 send_data:
-      sta VIA2_PORTB
+      sta VIA1_PORTB
       lda #(DATA_MODE | WRITE_MODE | PULSE) ; Set write data mode with active pulse
-      sta VIA2_PORTA
+      sta VIA1_PORTA
       and #NPULSE              ; Disable pulse bit (E) 
-      sta VIA2_PORTA
+      sta VIA1_PORTA
       rts
 
 data:

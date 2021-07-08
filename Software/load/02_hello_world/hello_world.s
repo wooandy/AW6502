@@ -17,4 +17,4 @@ init:
         rts
 
         .segment "RODATA"
-message: .byte "Hello World from loadable module!", $00
+message: .byte "Hello World!", $00

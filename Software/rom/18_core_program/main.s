@@ -33,7 +33,6 @@ prompt_loop:
       bra prompt_loop
 
 main_loop:
-
       ldx #00
       ldy #01
       jsr lcd_set_position      

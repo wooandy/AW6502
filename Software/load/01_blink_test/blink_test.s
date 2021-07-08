@@ -19,7 +19,7 @@ main_loop:
         jsr _delay_ms
         lda #(BLINK_LED_OFF)
         jsr _blink_led
-        lda #250
+        lda #150
         jsr _delay_ms
         dex
         bne main_loop

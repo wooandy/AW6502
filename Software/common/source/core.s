@@ -5,10 +5,13 @@
         .include "acia.inc"
         .include "blink.inc"
         .include "keyboard.inc"
+        .include "sound.inc"
 
         .import __USERRAM_START__
         .import __USERRAM_SIZE__
 
+		.import sound_init
+		.import startup_sound
         .export _system_init
         .export _interrupt_handler
         .export _register_system_break
@@ -49,6 +52,10 @@ _system_init:
         ; Enable BLINK LED during init operation
         lda #(BLINK_LED_ON)
         jsr _blink_led
+        ; Enable Sound
+        jsr sound_init
+        ; Play start up sound
+        jsr startup_sound
         ; Initialize C stack for loadable modules
         lda #<(__USERRAM_START__ + __USERRAM_SIZE__)
         sta sp
@@ -59,7 +66,7 @@ _system_init:
         ; Initialize ACIA
         jsr _acia_init
         ; Initialize keyboard
-        jsr _keyboard_init
+        jsr _keyboard_init  ; No keyboard
         ; Disable BCD mode
         cld
         ; Enable interrupt processing
@@ -76,14 +83,14 @@ _system_init:
 _interrupt_handler:
         ; Test ACIA first
         bit ACIA_STATUS
-        bpl check_via1
+        bpl check_via3
         jsr _handle_acia_irq
-check_via1:
-        bit VIA1_IFR
+check_via3:
+        bit VIA3_IFR
         bpl check_via2
         pha
-        lda VIA1_IFR
-        and VIA1_IER
+        lda VIA3_IFR
+        and VIA3_IER
         and #%00000010 ; IFR_CA1
         beq not_keyboard
         jsr _handle_keyboard_irq
@@ -205,3 +212,6 @@ _deregister_user_irq:
 ; INTERNAL
 service_user_irq:
         jmp (user_irq_address)
+        
+prompt:
+      .byte "OS/1 >>", $00

@@ -38,20 +38,20 @@ _keyboard_init:
       ; Reset buffer pointers
       stz keyboard_rptr
       stz keyboard_wptr
-      ; VIA1 PORTA is all input
-      stz VIA1_DDRA
+      ; VIA3 PORTA is all input
+      stz VIA3_DDRA
       ; Init PORTA
-      stz VIA1_PORTA
-      ; Setup read handshake on VIA2 CA1/CA2
+      stz VIA3_PORTA
+      ; Setup read handshake on VIA3 CA1/CA2
       ; Clear CA1/CA2 flags first
-      lda VIA1_PCR
+      lda VIA3_PCR
       and #$0f
       ; Enable read handshake
       ora #(VIA_PCR_CA1_INTERRUPT_NEGATIVE | VIA_PCR_CA2_OUTPUT_PULSE | VIA_PCR_CB1_INTERRUPT_NEGATIVE | VIA_PCR_CB2_OUTPUT_HIGH)
-      sta VIA1_PCR
+      sta VIA3_PCR
       ; Enable interrupt from VIA2 on CA1 (Data ready)
       lda #(VIA_IER_SET_FLAGS | VIA_IER_CA1_FLAG)
-      sta VIA1_IER
+      sta VIA3_IER
       ; Restore state of A register
       pla
       rts
@@ -62,7 +62,7 @@ _keyboard_init:
 _handle_keyboard_irq:
       pha
       ; Read code from keyboard controller
-      lda VIA1_PORTA
+      lda VIA3_PORTA
       ; Handle connection signal
       cmp #$ff
       beq @keyboard_connected

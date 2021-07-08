@@ -10,6 +10,7 @@
         .include "menu.inc"
         .include "parse.inc"
         .include "macros.inc"
+        .include "sound.inc"
 
         .export _run_shell
         .import os1_version
@@ -32,6 +33,7 @@
         .import __VIA1_START__
         .import __VIA2_START__
         .import __ACIA_START__
+        .import beep
 
         .code
 _run_shell:
@@ -99,6 +101,10 @@ _process_blink:
 @error:
         writeln_tty #blinkerror
         rts
+
+_process_beep:
+        jsr beep
+        rts 
 
 _process_monitor:
         writeln_tty #msgmonitor
@@ -184,23 +190,23 @@ param_pointer:
 
         .segment "RODATA"
 bannerh1:
-        .asciiz "+---------------------------+"
+        .asciiz "+------------------------------------------+"
 bannerh2:
-        .asciiz "|                           |"
+        .asciiz "|                                          |"
 banner1:
-        .asciiz "|   ####   ####     #   #   |"
+        .asciiz "|  #####  #   #  #   #  ###   ###   #####  |"
 banner2:
-        .asciiz "|  ##  ## ##       #   ##   |"
+        .asciiz "|  #      #   #  ##  #   #   #   #  #      |"
 banner3:
-        .asciiz "|  #    #  ###    #   # #   |"
+        .asciiz "|  ###    #   #  # # #   #   #      ###    |"
 banner4:
-        .asciiz "|  ##  ##    ##  #      #   |"
+        .asciiz "|  #      #   #  #  ##   #   #   #  #      |"
 banner5:
-        .asciiz "|   ####  ####  #      ###  |"
+        .asciiz "|  #####   ###   #   #  ###   ###   #####  |"
 msghello1: 
-        .asciiz " (Alpha+C)"
+        .asciiz " (Alpha)"
 msghello2: 
-        .asciiz "Welcome to OS/1 shell for DB6502 computer"
+        .asciiz "Welcome to Eunice OS"
 msghello3:
         .asciiz "Enter HELP to get list of possible commands"
 msgload:
@@ -210,7 +216,7 @@ msgrun:
 msgmonitor:
         .asciiz "Running monitor application..."
 msginfo:
-        .asciiz "OS/1 System Information"
+        .asciiz "Eunice OS System Information"
 clock_msg1:
         .asciiz "System clock running at "
 clock_msg2:
@@ -242,7 +248,7 @@ via2_addr_msg:
 acia_addr_msg:
         .asciiz "ACIA address: 0x"
 os1prompt:
-        .asciiz "OS/1>"
+        .asciiz "]"
 msgemptyline:
         .byte $00
 blinkerror:
@@ -254,6 +260,7 @@ menu:
         menuitem run_cmd,     1, run_desc,     _process_run
         menuitem monitor_cmd, 1, monitor_desc, _process_monitor
         menuitem blink_cmd,   2, blink_desc,   _process_blink
+        menuitem beep_cmd,    1, beep_desc,    _process_beep
         menuitem info_cmd,    1, info_desc,    _process_info
         endmenu 
 
@@ -273,6 +280,10 @@ blink_cmd:
         .asciiz "BLINK"
 blink_desc:
         .asciiz "BLINK on/off - toggle onboard blink LED"
+beep_cmd:
+        .asciiz "BEEP"        
+beep_desc:
+        .asciiz "BEEP - Play a beep sound"        
 info_cmd:
         .asciiz "INFO"
 info_desc:

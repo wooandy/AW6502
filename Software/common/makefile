@@ -56,6 +56,7 @@ ifneq ($(LOAD_LINK),static)
 	LOAD_LINK=dynamic
 endif
 
+LCD_MODE=8bit
 # LCD operation - 4bit or 8bit
 ifneq ($(LCD_MODE),8bit)
 	LCD_MODULE=lcd4bit.s
@@ -67,7 +68,7 @@ endif
 # Possible values below
 # WDC65C51 - use 0
 # R6551 - use 1 or 0 (both are supported, but 1 is "better")
-ACIA_TX_IRQ=0
+ACIA_TX_IRQ=1
 
 # Default address mode (basic/ext/.. )
 ADDRESS_MODE=ext
@@ -112,6 +113,7 @@ COMMON_SOURCES=syscalls.s    \
 							 utils.s       \
 							 via.s         \
 							 via_utils.s   \
+							 sound.s       \
 							 tty.s         \
 							 parse.s       \
 							 menu.s

@@ -5,14 +5,11 @@
 #define CHAR_MOUTH_OPEN 0x00
 #define CHAR_MOUTH_CLOSED 0x01
 
-static const unsigned char open_mouth_map[]   = {0b00001110, 
-                                                 0b00011111, 
-                                                 0b00010101, 
-                                                 0b00011111, 
-                                                 0b00010001, 
-                                                 0b00001110, 
-                                                 0b00000000,
-                                                 0b00000000};
+
+
+static const unsigned char open_mouth_map[]   = {
+0b00001110, 0b00011111, 0b00010101, 0b00011111, 0b00010001, 0b00001110, 0b00000000, 0b00000000
+};
 
 static const unsigned char closed_mouth_map[] = {0b00001110, 
                                                  0b00011111, 

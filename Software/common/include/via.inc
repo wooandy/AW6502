@@ -31,6 +31,24 @@
       .import VIA2_IFR
       .import VIA2_IER
       .import VIA2_PANH
+      
+      .import VIA3_PORTB
+      .import VIA3_PORTA
+      .import VIA3_DDRB
+      .import VIA3_DDRA
+      .import VIA3_T1CL
+      .import VIA3_T1CH
+      .import VIA3_T1LL
+      .import VIA3_T1LH
+      .import VIA3_T2CL
+      .import VIA3_T2CH
+      .import VIA3_SR
+      .import VIA3_ACR
+      .import VIA3_PCR
+      .import VIA3_IFR
+      .import VIA3_IER
+      .import VIA3_PANH
+
 
 
 

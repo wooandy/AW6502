@@ -112,9 +112,9 @@ handle_irq:
       ; Preserve A register
       pha
       ; Load interrupt flag register
-      lda VIA1_IFR
+      lda VIA3_IFR
       ; Not a VIA1 interrupt
-      bpl @not_via1
+      bpl @not_via3
       ; Preserve X register
       phx
       ; Prerve A in X for testing
@@ -126,7 +126,7 @@ handle_irq:
 @not_keyboard:
       ; Restore X
       plx
-@not_via1:
+@not_via3:
       ; Restore A
       pla
       ; Done

@@ -73,7 +73,7 @@ init:
       .segment "RODATA"
 
 os1_version:
-      .asciiz "OS/1 version 0.3.0C"
+      .asciiz "Eunice OS 1.0"
 keyboard_disconnected:
       .asciiz "No keyboard"
 keyboard_connected:
@@ -81,4 +81,4 @@ keyboard_connected:
 instruction:
       .asciiz "Connect serial port (19200 N8S1 CTS/RTS) and press any key in terminal window"
 shell_connected:
-      .asciiz "Shell connected"
+      .asciiz "Eunice <--> Mac"
