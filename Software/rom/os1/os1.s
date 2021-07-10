@@ -79,6 +79,6 @@ keyboard_disconnected:
 keyboard_connected:
       .asciiz "Keyboard connected"
 instruction:
-      .asciiz "Connect serial port (19200 N8S1 CTS/RTS) and press any key in terminal window"
+      .asciiz "Press any key to continue"
 shell_connected:
-      .asciiz "Eunice <--> Mac"
+      .asciiz "Eunice <---> Mac"

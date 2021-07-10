@@ -252,7 +252,7 @@ _lcd_newline:
         ; set X to 0
         ldx #$00
         ; compare Y against 3 - if last row, we need to scroll up
-        cpy #$03
+        cpy #$01
         bcc @next_line
         jsr _lcd_scroll_up
         bra @set_new_position

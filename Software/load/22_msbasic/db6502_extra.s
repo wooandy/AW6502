@@ -1,4 +1,5 @@
       .include "acia.inc"
+      .include "keyboard.inc"
 
 .segment "CODE"
 ISCNTC:
@@ -35,17 +36,32 @@ MONCOUT:
 	RTS
 
 MONRDKEY:
-
+; 	LDA	ACIA_STATUS
+; 	AND	#ACIA_STATUS_RX_FULL
+; 	BEQ	NoDataIn
+; 	LDA	ACIA_DATA
+; 	SEC		; Carry set if key available
+; 	RTS
+; NoDataIn:
+; 	CLC		; Carry clear if no key pressed
   jsr _acia_is_data_available
   ; skip, no data available at this point
   cmp #(ACIA_NO_DATA_AVAILABLE)
-  beq NoDataIn
+  beq isPS2KeyboardAvailable
   jsr _acia_read_byte
+  jmp donereading  
+isPS2KeyboardAvailable:  
+  jsr _keyboard_is_data_available
+  cmp #(KEYBOARD_NO_DATA_AVAILABLE)
+  beq NoDataIn
+  jsr _keyboard_read_char
+donereading:  
   sec
   rts
 NoDataIn:
   clc
 	RTS
+	
 
 MONISCNTC:
 	JSR	MONRDKEY

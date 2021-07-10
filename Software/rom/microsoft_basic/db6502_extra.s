@@ -86,8 +86,15 @@ MONRDKEY:
   jsr _acia_is_data_available
   ; skip, no data available at this point
   cmp #(ACIA_NO_DATA_AVAILABLE)
-  beq NoDataIn
+  beq isPS2KeyboardAvailable
   jsr _acia_read_byte
+  jmp donereading  
+isPS2KeyboardAvailable:  
+  jsr _keyboard_is_data_available
+  cmp #(KEYBOARD_NO_DATA_AVAILABLE)
+  beq NoDataIn
+  jsr _keyboard_read_char
+donereading:  
   sec
   rts
 NoDataIn:
