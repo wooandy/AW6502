@@ -76,6 +76,7 @@ NotCTRLC:
 
 StartupMessage:
 	.byte	"Cold [C] or warm [W] start?",$0D,$0A,$00
+;	.byte	"Cold [C] or warm [W] start?",$00
 
 LOAD:
 	RTS

@@ -251,8 +251,8 @@ _lcd_newline:
         jsr lcd_get_position
         ; set X to 0
         ldx #$00
-        ; compare Y against 3 - if last row, we need to scroll up
-        cpy #$01
+        ; compare Y against 3 (1 for 1602 LCD)- if last row, we need to scroll up
+        cpy #$03
         bcc @next_line
         jsr _lcd_scroll_up
         bra @set_new_position

@@ -89,7 +89,13 @@
         .export _run_menu
         .export run_menu
         .export _setup_menuitem
-
+; Dpad routines
+        .export _dpad_init
+        .export _dpad_is_up
+        .export _dpad_is_down
+        .export _dpad_is_left
+        .export _dpad_is_right
+        
         .code
 
 ; Init routines
@@ -106,7 +112,7 @@ _acia_init:
         jmp (_syscall__acia_init)
 
 _keyboard_init:
-        jmp (_syscall__keyboard_init)
+        jmp (_syscall__keyboard_init)            
 
 ; Core routines
 _register_user_break:
@@ -146,7 +152,7 @@ _blink_led:
         
 _strobe_led:
         jmp (_syscall__strobe_led)
-
+      
 ; VIA routines
 via2_get_register:
         jmp (_syscall_via2_get_register)
@@ -332,3 +338,17 @@ run_menu:
 
 _setup_menuitem:
         jmp (_syscall__setup_menuitem)
+
+        
+; Dpad rountines
+_dpad_init:
+        jmp (_syscall__dpad_init)   
+_dpad_is_up:
+        jmp (_syscall__dpad_is_up)
+_dpad_is_down:
+        jmp (_syscall__dpad_is_down)
+_dpad_is_left:
+        jmp (_syscall__dpad_is_left)
+_dpad_is_right:
+        jmp (_syscall__dpad_is_right)  
+                

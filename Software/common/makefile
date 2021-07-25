@@ -103,7 +103,8 @@ BASE_LIBRARY=$(COMMON_ROOT)/none.lib
 # Common objects to be linked
 COMMON_SOURCES=syscalls.s    \
 							 acia.s        \
-               blink.s       \
+                             blink.s       \
+                             dpad.s        \
 							 core.s        \
 							 keyboard.s    \
 							 lcd.s         \
@@ -116,7 +117,8 @@ COMMON_SOURCES=syscalls.s    \
 							 sound.s       \
 							 tty.s         \
 							 parse.s       \
-							 menu.s
+							 menu.s        
+
 
 COMMON_OBJECTS=$(COMMON_SOURCES:%.s=$(COMMON_BUILD_FOLDER)/%.o)
 

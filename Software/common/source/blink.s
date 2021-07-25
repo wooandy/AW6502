@@ -14,11 +14,11 @@ BLINK_LED_OFF = $00
 _blink_init:
       pha
       lda VIA2_DDRB
-      ora #%10000000
+      ora #%10000011
       sta VIA2_DDRB
-      lda VIA3_DDRB
-      ora #%11111111
-      sta VIA3_DDRB
+;      lda VIA3_DDRB
+;      ora #%11111111
+;      sta VIA3_DDRB
 ;      lda VIA3_PORTB
 ;      ora #%11111111
 ;      sta VIA3_PORTB
@@ -39,7 +39,7 @@ _blink_led:
 ; if carry clear - disable LED
 ; enable LED otherwise
       lda VIA2_PORTB
-      ora #%10000000
+      ora #%10000011
       bra @send_signal
 @disable_led:
 ; send signal

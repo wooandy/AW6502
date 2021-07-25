@@ -11,6 +11,7 @@
         .include "parse.inc"
         .include "macros.inc"
         .include "sound.inc"
+        .include "dpad.inc"
 
         .export _run_shell
         .import os1_version
@@ -37,36 +38,62 @@
 
         .code
 _run_shell:
-        lda #(TTY_CONFIG_INPUT_SERIAL | TTY_CONFIG_INPUT_KEYBOARD | TTY_CONFIG_OUTPUT_SERIAL)
+        lda acia_conn
+        cmp #$00
+        beq @disable_serial
+      
+        write_lcd #msg_has_acia
+        lda #02
+        jsr _delay_sec   
+        lda #(TTY_CONFIG_INPUT_SERIAL | TTY_CONFIG_INPUT_KEYBOARD | TTY_CONFIG_OUTPUT_SERIAL | TTY_CONFIG_OUTPUT_LCD)  
         jsr _tty_init
-
+        jmp @start_hello
+@disable_serial:
+         write_lcd #msg_no_acia  
+         lda #02
+         jsr _delay_sec 
+         lda #(TTY_CONFIG_INPUT_KEYBOARD | TTY_CONFIG_OUTPUT_LCD)      
+         jsr _tty_init 
         ; Display banner
-        writeln_tty #msgemptyline
-        writeln_tty #bannerh1
-        writeln_tty #bannerh2
-        writeln_tty #banner1
-        writeln_tty #banner2
-        writeln_tty #banner3
-        writeln_tty #banner4
-        writeln_tty #banner5
-        writeln_tty #bannerh2
-        writeln_tty #bannerh1
-        writeln_tty #msgemptyline
+;        writeln_tty #msgemptyline
+;        writeln_tty #bannerh1
+;        writeln_tty #bannerh2
+;        writeln_tty #banner1
+;        writeln_tty #banner2
+;        writeln_tty #banner3
+;        writeln_tty #banner4
+;        writeln_tty #banner5
+;        writeln_tty #bannerh2
+;        writeln_tty #bannerh1
+;        writeln_tty #msgemptyline
 
         ; Display hello messages
-        write_tty #os1_version
-        writeln_tty #msghello1
+;        write_tty #os1_version
+;        writeln_tty #msghello1
+;        writeln_tty #msgemptyline
+@start_hello:
+         jsr _tty_send_newline
         writeln_tty #msghello2
-        writeln_tty #msghello3
+        jsr _tty_send_newline
+;        lda #03
+;        jsr _delay_sec
+;        writeln_tty #msghello3
+
+        ; Display welcome message on lcd
+;        write_lcd #welcome_lcd
 
         register_system_break #system_break_handler
 
 main_loop:
+ ;       write_lcd #os1prompt
         run_menu #menu, #os1prompt
+
         rts
 
 _process_load:
         writeln_tty #msgload
+ ;       jsr _lcd_newline
+ ;       write_lcd #load_lcd
 @receive_file:
         jsr _modem_receive
         cmp #(MODEM_RECEIVE_FAILED)
@@ -74,7 +101,9 @@ _process_load:
         rts
 
 _process_run:
+   ;     jsr _lcd_newline
         writeln_tty #msgrun
+  ;      write_lcd #run_program
         jsr $1000
         jsr _deregister_user_irq
         jsr _deregister_user_break
@@ -91,6 +120,8 @@ _process_blink:
         bcc @error
         cmp #$00
         beq @turn_off
+ ;       jsr _lcd_newline
+ ;       write_lcd #blink_lcd
         lda #(BLINK_LED_ON)
         jsr _blink_led
         rts
@@ -103,6 +134,8 @@ _process_blink:
         rts
 
 _process_beep:
+;        jsr _lcd_newline
+;        write_lcd #beep_lcd
         jsr beep
         rts 
 
@@ -288,3 +321,7 @@ info_cmd:
         .asciiz "INFO"
 info_desc:
         .asciiz "INFO - display system information"
+msg_no_acia:
+    .asciiz "No ACIA"
+msg_has_acia:
+    .asciiz "ACIA connected" 

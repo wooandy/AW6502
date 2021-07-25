@@ -1,6 +1,7 @@
         .include "zeropage.inc"
         .include "utils.inc"
         .include "via.inc"
+  ;      .include "lcd.inc"
 
         .export _lcd_init
         .export lcd_read_byte
@@ -57,6 +58,8 @@ LCD_DATA_DDR_READ_MASK  = %00000000
 LCD_CTRL_DDR_WRITE_MASK = %11100000
 
 LCD_CTRL_PRESERVE_MASK  = %00011111
+
+ENTER                   = $0d
 
         .code
 
@@ -154,6 +157,8 @@ lcd_write_byte:
         sta LCD_DATA_DDR
         ; Process actual data
         lda lcd_temp_char2
+  ;      cmp #(ENTER)
+  ;      beq @enter
         sta LCD_DATA_PORT
         ; Ping
         lda LCD_CONTROL_PORT
@@ -165,7 +170,9 @@ lcd_write_byte:
         eor #(LCD_ENABLE_FLAG)
         sta LCD_CONTROL_PORT
         rts
-
+;@enter:
+;        jsr _lcd_newline
+;        rts
 ; INTERNAL
 ; lcd_read_byte - read one byte from LCD
 ; result in A
@@ -256,5 +263,5 @@ lcd_init_sequence_data:
         .byte LCD_CMD_DISPLAY_MODE | LCD_DM_DISPLAY_OFF | LCD_DM_CURSOR_OFF | LCD_DM_CURSOR_NOBLINK
         .byte LCD_CMD_CLEAR
         .byte LCD_CMD_ENTRY_MODE | LCD_EM_SHIFT_CURSOR | LCD_EM_INCREMENT
-        .byte LCD_CMD_DISPLAY_MODE | LCD_DM_DISPLAY_ON | LCD_DM_CURSOR_OFF | LCD_DM_CURSOR_NOBLINK
+        .byte LCD_CMD_DISPLAY_MODE | LCD_DM_DISPLAY_ON | LCD_DM_CURSOR_ON | LCD_DM_CURSOR_BLINK
         .byte $00

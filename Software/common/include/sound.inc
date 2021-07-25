@@ -48,6 +48,7 @@ SN_CE           = %00000100 ; Chip enable pin (active low) - Tied to ground
 SN_DATA         = %11111111 ; Data pins
 LED_ON          = %10000000 ; LED pin ON
 LED_OFF         = %00000000 ; LED pin OFF
+D_PAD           = %00000000 ; D-Pad
 
 ; Notes
 ; Note, (s)harp/(f)lat/(n)atural, octave, byte 1 or 2

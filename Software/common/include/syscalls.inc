@@ -4,6 +4,7 @@
         .forceimport _syscall__lcd_init
         .forceimport _syscall__acia_init
         .forceimport _syscall__keyboard_init
+
 ; Core routines
         .forceimport _syscall__register_user_break
         .forceimport _syscall__deregister_user_break
@@ -18,7 +19,7 @@
         .forceimport _syscall_convert_hex_to_dec
 ; Blink routines
         .forceimport _syscall__blink_led
-        .forceimport _syscall__strobe_led
+        .forceimport _syscall__strobe_led          
 ; VIA routines
         .forceimport _syscall_via2_get_register
         .forceimport _syscall__via2_get_register
@@ -87,4 +88,9 @@
         .forceimport _syscall__run_menu
         .forceimport _syscall_run_menu
         .forceimport _syscall__setup_menuitem
-
+; Dpad routines
+        .forceimport _syscall__dpad_init
+        .forceimport _syscall__dpad_is_up
+        .forceimport _syscall__dpad_is_down
+        .forceimport _syscall__dpad_is_left
+        .forceimport _syscall__dpad_is_right    

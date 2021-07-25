@@ -5,6 +5,7 @@
         .include "keyboard.inc"
         .include "utils.inc"
         .include "macros.inc"
+        .include "blink.inc"
 
         .export _tty_init
         .export _tty_read_line
@@ -20,11 +21,14 @@ TTY_CONFIG_INPUT_SERIAL   = %00000001
 TTY_CONFIG_INPUT_KEYBOARD = %00000010
 TTY_CONFIG_OUTPUT_SERIAL  = %00000100
 TTY_CONFIG_OUTPUT_LCD     = %00001000
+TTY_CONFIG_DISABLE_SERIAL = %00001010
 
 ENTER                   = $0d
 BACKSPACE               = $08
 DELETE                  = $7f
 ESC                     = $1b
+;LF                      = $0a
+
 
         .code
 
@@ -47,7 +51,7 @@ _tty_read_line:
         ply
         jsr tty_read_line
         inc_ptr sp, #$02
-        rts
+
 
 ; NEGATIVE C COMPLIANT
 ; Blocks until full line read (Enter pressed)
@@ -74,6 +78,17 @@ tty_read_line:
         cmp #(ENTER)
         bne @not_enter
         ; disable cursor display
+        
+        ; DEBUG
+;        lda #(BLINK_LED_ON)
+;        jsr _blink_led
+;        lda #250
+;        jsr _delay_ms
+;        lda #(BLINK_LED_OFF)
+;        jsr _blink_led
+;        lda #150
+;        jsr _delay_ms
+        
         jsr tty_disable_cursor
         ; line buffer contains the command now, send newline chars
         jsr _tty_send_newline
@@ -305,12 +320,25 @@ _tty_send_character:
         ; lcd output disabled
         beq @skip_lcd
         tya
+        cmp #(LF)
+        beq @ignore_linefeed
+        cmp #(ENTER)
+        beq @enteranewline
         jsr _lcd_print_char
 @skip_lcd:
         tya
         ply
         rts
-
+@enteranewline:
+        jsr _lcd_newline
+        tya 
+        ply
+        rts
+@ignore_linefeed:
+        TYA
+        ply
+        rts        
+        
 ; INTERNAL
 ; Sends backspace instruction to selected channels
 tty_send_backspace:

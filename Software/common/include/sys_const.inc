@@ -2,8 +2,8 @@ ACIA_RX_BUFFER_SIZE     = 256
 ACIA_TX_BUFFER_SIZE     = 256
 KEYBOARD_BUFFER_SIZE    = 64
 
-LCD_COLUMNS             = $10
-LCD_ROWS                = $02
+LCD_COLUMNS             = 20
+LCD_ROWS                = 4
 
 CHAR_END_OF_STRING      = $00
 CHAR_SPACE              = $20

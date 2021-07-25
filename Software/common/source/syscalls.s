@@ -11,6 +11,7 @@
         .include "parse.inc"
         .include "menu.inc"
         .include "via_utils.inc"
+        .include "dpad.inc"
 
 ; Init routines
         .export _syscall__system_init
@@ -32,7 +33,7 @@
         .export _syscall_convert_hex_to_dec
 ; Blink routines
         .export _syscall__blink_led
-        .export _syscall__strobe_led
+        .export _syscall__strobe_led            
 ; VIA routines
         .export _syscall_via2_get_register
         .export _syscall__via2_get_register
@@ -101,7 +102,13 @@
         .export _syscall__run_menu
         .export _syscall_run_menu
         .export _syscall__setup_menuitem
-
+; Dpad routines
+        .export _syscall__dpad_init
+        .export _syscall__dpad_is_up
+        .export _syscall__dpad_is_down
+        .export _syscall__dpad_is_left
+        .export _syscall__dpad_is_right  
+        
         .segment "SYSCALLS"
 
         .macro SYSCALL_VECTOR _function
@@ -121,7 +128,7 @@ _syscall__lcd_init:
 _syscall__acia_init:
         SYSCALL_VECTOR _acia_init
 _syscall__keyboard_init:
-        SYSCALL_VECTOR _keyboard_init
+        SYSCALL_VECTOR _keyboard_init                    
 _syscall__register_user_break:
         SYSCALL_VECTOR _register_user_break
 _syscall__deregister_user_break:
@@ -145,7 +152,7 @@ _syscall_convert_hex_to_dec:
 _syscall__blink_led:
         SYSCALL_VECTOR _blink_led
 _syscall__strobe_led:
-        SYSCALL_VECTOR _strobe_led
+        SYSCALL_VECTOR _strobe_led                             
 _syscall_via2_get_register:
         SYSCALL_VECTOR via2_get_register
 _syscall__via2_get_register:
@@ -263,4 +270,14 @@ _syscall__run_menu:
 _syscall_run_menu:
         SYSCALL_VECTOR run_menu
 _syscall__setup_menuitem:
-        SYSCALL_VECTOR _setup_menuitem
+        SYSCALL_VECTOR _setup_menuitem     
+_syscall__dpad_init:
+        SYSCALL_VECTOR _dpad_init   
+_syscall__dpad_is_up:
+        SYSCALL_VECTOR _dpad_is_up
+_syscall__dpad_is_down:
+        SYSCALL_VECTOR _dpad_is_down
+_syscall__dpad_is_left:
+        SYSCALL_VECTOR _dpad_is_left
+_syscall__dpad_is_right:
+        SYSCALL_VECTOR _dpad_is_right         

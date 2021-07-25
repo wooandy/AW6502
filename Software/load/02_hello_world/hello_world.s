@@ -8,6 +8,8 @@
         .word   $0000
 
         .code
+
+        
 init:
         jsr _lcd_init
         write_lcd #message
@@ -16,5 +18,4 @@ init:
         jsr _lcd_clear
         rts
 
-        .segment "RODATA"
-message: .byte "Hello World!", $00
+message: .asciiz "Hello, world!"

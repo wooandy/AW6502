@@ -39,7 +39,8 @@ QT_OK:
 		; binary patch!
         .byte   CR,0,0,"K",CR,LF
     .else
-		.byte   CR,LF,"OK",CR,LF
+;		.byte   CR,LF,"OK",CR,LF
+		.byte   $0d, $0a, "OK", $0d, $0a		
     .endif
   .endif
 		.byte	0

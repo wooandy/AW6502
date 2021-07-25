@@ -52,7 +52,7 @@ sound_init:
     ; Set up our 6522 for the SN76489
     PHA
     LDA VIA2_DDRB 
-    ORA #(SN_WE|SN_CE)          ; Ready input, WE and CE output
+    ORA #(SN_WE|SN_CE | D_PAD)          ; Ready input, WE and CE output
     STA VIA2_DDRB
     LDA #SN_DATA                ; Default to setting the SN data bus to output
     STA VIA2_DDRA
