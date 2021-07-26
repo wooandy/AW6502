@@ -117,7 +117,8 @@ COMMON_SOURCES=syscalls.s    \
 							 sound.s       \
 							 tty.s         \
 							 parse.s       \
-							 menu.s        
+							 menu.s        \
+							 sd.s
 
 
 COMMON_OBJECTS=$(COMMON_SOURCES:%.s=$(COMMON_BUILD_FOLDER)/%.o)

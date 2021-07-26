@@ -94,3 +94,5 @@
         .forceimport _syscall__dpad_is_down
         .forceimport _syscall__dpad_is_left
         .forceimport _syscall__dpad_is_right    
+; SD card routines
+        .forceimport _syscall__sd_init

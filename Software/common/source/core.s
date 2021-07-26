@@ -6,6 +6,7 @@
         .include "blink.inc"
         .include "keyboard.inc"
         .include "sound.inc"
+        .include "sd.inc"
 
         .import __USERRAM_START__
         .import __USERRAM_SIZE__
@@ -75,6 +76,7 @@ _system_init:
         lda #(BLINK_LED_OFF)
         jsr _blink_led
         ; Done, return from subroutine
+        jsr _sd_init
         rts
 
 ; TENTATIVE C COMPLIANT
