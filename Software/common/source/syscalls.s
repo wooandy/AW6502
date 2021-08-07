@@ -12,7 +12,7 @@
         .include "menu.inc"
         .include "via_utils.inc"
         .include "dpad.inc"
-        .include "sd.inc"
+ ;       .include "sd.inc"
 
 ; Init routines
         .export _syscall__system_init
@@ -110,7 +110,7 @@
         .export _syscall__dpad_is_left
         .export _syscall__dpad_is_right  
 ; SD card routines
-        .export _syscall__sd_init        
+;        .export _syscall__sd_init        
         .segment "SYSCALLS"
 
         .macro SYSCALL_VECTOR _function
@@ -283,5 +283,5 @@ _syscall__dpad_is_left:
         SYSCALL_VECTOR _dpad_is_left
 _syscall__dpad_is_right:
         SYSCALL_VECTOR _dpad_is_right     
-_syscall__sd_init:
-        SYSCALL_VECTOR _sd_init            
+;_syscall__sd_init:
+;        SYSCALL_VECTOR _sd_init            

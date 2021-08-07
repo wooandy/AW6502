@@ -31,3 +31,6 @@ system_break_sp:       .res 1
 user_break_address:    .res 2
 user_break_sp:         .res 1
 user_irq_address:      .res 2
+zp_sd_address:         .res 2
+zp_sd_currentsector:      .res 4   ; 4 bytes
+zp_fat32_variables:       .res 24

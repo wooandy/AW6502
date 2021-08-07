@@ -52,9 +52,10 @@ COMMON_BUILD_FOLDER=$(BUILD_ROOT)/common
 COMMON_LIB_FOLDER=$(BUILD_ROOT)/lib
 
 # Loadable module linking mode (dynamic/static)
-ifneq ($(LOAD_LINK),static)
-	LOAD_LINK=dynamic
-endif
+#ifneq ($(LOAD_LINK),static)
+#	LOAD_LINK=dynamic #Forced dynamic linking
+LOAD_LINK=static
+#endif
 
 LCD_MODE=8bit
 # LCD operation - 4bit or 8bit
@@ -97,28 +98,31 @@ endif
 COMMON_ROOT=../../common
 COMMON_INCLUDE_FOLDER=$(COMMON_ROOT)/include
 COMMON_SOURCE_FOLDER=$(COMMON_ROOT)/source
+BAS_ROOT=../../load
+BAS_SOURCE_FOLDER=../../load/22_msbasic/msbasic.s
 
 BASE_LIBRARY=$(COMMON_ROOT)/none.lib
 
 # Common objects to be linked
-COMMON_SOURCES=syscalls.s    \
-							 acia.s        \
-                             blink.s       \
-                             dpad.s        \
-							 core.s        \
-							 keyboard.s    \
-							 lcd.s         \
-							 $(LCD_MODULE) \
-							 modem.s       \
-							 string.s      \
-							 utils.s       \
-							 via.s         \
-							 via_utils.s   \
-							 sound.s       \
-							 tty.s         \
-							 parse.s       \
-							 menu.s        \
-							 sd.s
+COMMON_SOURCES=syscalls.s	\
+							acia.s        \
+							blink.s       \
+							dpad.s        \
+							core.s        \
+							keyboard.s    \
+							lcd.s         \
+							$(LCD_MODULE) \
+							modem.s       \
+							string.s      \
+							utils.s       \
+							via.s         \
+							via_utils.s   \
+							sound.s       \
+							tty.s         \
+							parse.s       \
+							menu.s        \
+							sd.s          \
+							$(BAS_SOURCE_FOLDER)
 
 
 COMMON_OBJECTS=$(COMMON_SOURCES:%.s=$(COMMON_BUILD_FOLDER)/%.o)

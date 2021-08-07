@@ -1,3 +1,4 @@
+![Image of Eunice Computer](/images/eunice.jpg "Eunice Computer")
 # DB6502 - Dawid Buchwald's 6502 Computer
 
 This repository contains all the work in progress during my build of Ben Eater's inspired 6502 8-bit computer similar to typical machines of the early 1980s. If you haven't seen Ben's videos, I would strongly suggest you start there:

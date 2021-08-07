@@ -27,6 +27,8 @@ ENTER                   = $0d
 BACKSPACE               = $08
 DELETE                  = $7f
 ESC                     = $1b
+ASCII_LO                = $20
+ASCII_HI                = $7e
 ;LF                      = $0a
 
 
@@ -324,7 +326,14 @@ _tty_send_character:
         beq @ignore_linefeed
         cmp #(ENTER)
         beq @enteranewline
+        sec
+        cmp #(ASCII_LO)
+        bcc @non_ascii
+        clc
+        cmp #(ASCII_HI)
+        bcs @non_ascii
         jsr _lcd_print_char
+@non_ascii:
 @skip_lcd:
         tya
         ply
@@ -333,7 +342,7 @@ _tty_send_character:
         jsr _lcd_newline
         tya 
         ply
-        rts
+        rts        
 @ignore_linefeed:
         TYA
         ply

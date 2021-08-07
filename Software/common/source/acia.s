@@ -219,7 +219,7 @@ _acia_read_byte:
         sec
         sbc acia_rx_rptr
         ; More than 64 - still overflow
-        cmp #$40
+        cmp #$40   ; was $40
         bcs still_rx_overflow
         ; Otherwise accept more characters
         lda ACIA_COMMAND

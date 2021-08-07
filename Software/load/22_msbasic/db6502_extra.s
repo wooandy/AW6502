@@ -1,12 +1,16 @@
       .include "acia.inc"
       .include "keyboard.inc"
+ 
+      .export _start_msbasic
 
 .segment "CODE"
+
 ISCNTC:
           jmp MONISCNTC
 ;!!! *used*to* run into "STOP"
 
 init:
+_start_msbasic:
       stz EXITFLAG
 
 ; Display startup message

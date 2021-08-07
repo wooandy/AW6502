@@ -27,4 +27,8 @@
 .globalzp user_break_address
 .globalzp user_break_sp
 .globalzp user_irq_address
+.globalzp zp_sd_address  ; 2 bytes
+.globalzp zp_sd_currentsector  ; 4 bytes
+.globalzp zp_fat32_variables  ; 24 bytes
+
 

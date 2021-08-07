@@ -1,4 +1,5 @@
       .import _sd_init
+      .import _sd_read
 
 SD_PORTB = $8200
 SD_PORTA = $8201

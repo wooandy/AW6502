@@ -12,6 +12,8 @@
         .include "macros.inc"
         .include "sound.inc"
         .include "dpad.inc"
+        .include "sd.inc"
+;        .include "../../load/22_msbasic/msbasic.s"
 
         .export _run_shell
         .import os1_version
@@ -33,8 +35,10 @@
         .import __VECTORS_SIZE__
         .import __VIA1_START__
         .import __VIA2_START__
-        .import __ACIA_START__
+        .import __VIA3_START__             
+        .import __ACIA_START__   
         .import beep
+        .import _start_msbasic
 
         .code
 _run_shell:
@@ -85,15 +89,13 @@ _run_shell:
         register_system_break #system_break_handler
 
 main_loop:
- ;       write_lcd #os1prompt
         run_menu #menu, #os1prompt
 
         rts
 
 _process_load:
         writeln_tty #msgload
- ;       jsr _lcd_newline
- ;       write_lcd #load_lcd
+
 @receive_file:
         jsr _modem_receive
         cmp #(MODEM_RECEIVE_FAILED)
@@ -101,14 +103,20 @@ _process_load:
         rts
 
 _process_run:
-   ;     jsr _lcd_newline
         writeln_tty #msgrun
-  ;      write_lcd #run_program
         jsr $1000
         jsr _deregister_user_irq
         jsr _deregister_user_break
         rts
 
+_process_sd:
+        jsr _sd_read
+        rts
+        
+_process_msbasic:
+        jsr _start_msbasic
+        rts        
+        
 _process_blink:
         sta tokens_pointer
         stx tokens_pointer+1
@@ -120,8 +128,6 @@ _process_blink:
         bcc @error
         cmp #$00
         beq @turn_off
- ;       jsr _lcd_newline
- ;       write_lcd #blink_lcd
         lda #(BLINK_LED_ON)
         jsr _blink_led
         rts
@@ -134,8 +140,6 @@ _process_blink:
         rts
 
 _process_beep:
-;        jsr _lcd_newline
-;        write_lcd #beep_lcd
         jsr beep
         rts 
 
@@ -202,6 +206,9 @@ _process_info:
         write_tty #via2_addr_msg
         write_tty_address #__VIA2_START__
         jsr _tty_send_newline
+        write_tty #via3_addr_msg
+        write_tty_address #__VIA3_START__
+        jsr _tty_send_newline        
         write_tty #acia_addr_msg
         write_tty_address #__ACIA_START__
         jsr _tty_send_newline
@@ -278,6 +285,8 @@ via1_addr_msg:
         .asciiz "VIA1 address: 0x"
 via2_addr_msg:
         .asciiz "VIA2 address: 0x"
+via3_addr_msg:
+        .asciiz "VIA3 address: 0x"        
 acia_addr_msg:
         .asciiz "ACIA address: 0x"
 os1prompt:
@@ -295,6 +304,8 @@ menu:
         menuitem blink_cmd,   2, blink_desc,   _process_blink
         menuitem beep_cmd,    1, beep_desc,    _process_beep
         menuitem info_cmd,    1, info_desc,    _process_info
+        menuitem sd_cmd,      1, sd_desc,      _process_sd
+        menuitem msbasic_cmd, 1, msbasic_desc, _process_msbasic
         endmenu 
 
 load_cmd:
@@ -321,6 +332,14 @@ info_cmd:
         .asciiz "INFO"
 info_desc:
         .asciiz "INFO - display system information"
+sd_cmd:
+        .asciiz "SD"
+sd_desc:
+        .asciiz "SD - Read a TXT file"     
+msbasic_cmd:
+        .asciiz "BASIC"        
+msbasic_desc:
+        .asciiz "BASIC - Run Microsoft BASIC"                     
 msg_no_acia:
     .asciiz "No ACIA"
 msg_has_acia:

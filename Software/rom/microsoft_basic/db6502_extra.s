@@ -4,7 +4,8 @@
       .include "acia.inc"
       .include "keyboard.inc"
       .include "syscalls.inc"
-
+      .export _start_msbasic
+      
 .segment "CODE"
 ; ISCNTC:
 ;         jmp     MONISCNTC
@@ -20,6 +21,7 @@ ISCNTC:
           jmp MONISCNTC
 ;!!! *used*to* run into "STOP"
 
+_msbasic:
 init:
 
       ldx #$ff

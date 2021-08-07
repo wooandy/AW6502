@@ -96,8 +96,8 @@
         .export _dpad_is_left
         .export _dpad_is_right
 ; SD card routines
-        .export _sd_init        
-        .code
+;        .export _sd_init        
+;        .code
 
 ; Init routines
 _system_init:
@@ -353,5 +353,5 @@ _dpad_is_left:
 _dpad_is_right:
         jmp (_syscall__dpad_is_right)  
 ; SD card routines
-_sd_init:
-        jmp (_syscall__sd_init)                
+;_sd_init:
+;        jmp (_syscall__sd_init)                
