@@ -13,7 +13,7 @@ FTDI FT232R USB UART
 2004 LCD display
 PS2 Keyboard
 D-pad
-SD Card storage
+SD Card slot
 ```
 ## Memory Map
 ```
