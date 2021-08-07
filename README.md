@@ -1,4 +1,53 @@
 ![Image of Eunice Computer](/images/eunice.jpg "Eunice Computer")
+# Eunice - a 6502-based breadboard computer
+WDC 65C02 CPU @1MHz
+Atmel AT28C256 EEPROM 32K
+Alliance AS6C62256A SRAM 32K
+WDC 65C22 VIA
+Rockwell R6551 ACIA
+TI SN76489 PSG
+FTDI FT232R USB UART
+2004 LCD display
+PS2 Keyboard
+D-pad
+SD Card storage
+——-
+## Memory Map
+——-
+RAM $0000 - $7FFF
+VIA1 $9000
+VIA2 $8800
+ACIA $8400
+VIA3 $8200
+ROM $A000 - $FFFF
+——-
+## IO
+——-
+VIA1 - LCD
+VIA2 - Sound and LED
+VIA3 - Keyboard and SD card
+ACIA - Serial
+——-
+## TO-DO
+——-
+- [ ] GFoot Simple VGA board
+- [ ] 4004 LCD board
+- [ ] Load/save Basic program from SD
+- [x] BASIC in ROM
+- [ ] TMS9918 VDP
+- [ ] Yamaha Sound board
+- [ ] Test 555 Clock board with Scope
+- [x] GFoot SD card FAT32 support
+- [x] SD card program storage
+- [x] DS1813 reset IC to replace 555
+- [x] Program SN76489 PSG in OS1
+- [x] Handle IRQ
+- [x] PS/2 keyboard interface
+- [x] Add the 3rd 6522 VIA
+- [x] Install Forth
+- [x] Install OS/1
+- [x] On-board LEDs connect to VIA
+
 # DB6502 - Dawid Buchwald's 6502 Computer
 
 This repository contains all the work in progress during my build of Ben Eater's inspired 6502 8-bit computer similar to typical machines of the early 1980s. If you haven't seen Ben's videos, I would strongly suggest you start there:
