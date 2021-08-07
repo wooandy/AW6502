@@ -11,25 +11,25 @@ FTDI FT232R USB UART
 PS2 Keyboard
 D-pad
 SD Card storage
-——-
+
 ## Memory Map
-——-
+
 RAM $0000 - $7FFF
 VIA1 $9000
 VIA2 $8800
 ACIA $8400
 VIA3 $8200
 ROM $A000 - $FFFF
-——-
+
 ## IO
-——-
+
 VIA1 - LCD
 VIA2 - Sound and LED
 VIA3 - Keyboard and SD card
 ACIA - Serial
-——-
+
 ## TO-DO
-——-
+
 - [ ] GFoot Simple VGA board
 - [ ] 4004 LCD board
 - [ ] Load/save Basic program from SD
