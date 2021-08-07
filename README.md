@@ -1,5 +1,8 @@
 ![Image of Eunice Computer](/images/eunice.jpg "Eunice Computer")
 # Eunice - a 6502-based breadboard computer
+
+## Specifications
+```
 WDC 65C02 CPU @1MHz
 Atmel AT28C256 EEPROM 32K
 Alliance AS6C62256A SRAM 32K
@@ -11,7 +14,7 @@ FTDI FT232R USB UART
 PS2 Keyboard
 D-pad
 SD Card storage
-
+```
 ## Memory Map
 ```
 RAM $0000 - $7FFF
