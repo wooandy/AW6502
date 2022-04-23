@@ -40,10 +40,11 @@ init:
       jsr _system_init
       ; Display hello message
       write_lcd #os1_version
+      jsr _lcd_newline
       ; Display keyboard status
-      ldx #$00
-      ldy #$01
-      jsr lcd_set_position
+ ;     ldx #$00
+ ;     ldy #$01
+ ;     jsr lcd_set_position
       lda #1
       jsr _delay_sec
       jsr _keyboard_is_connected
@@ -108,8 +109,8 @@ init:
       write_lcd #shell_connected
       lda #02
       jsr _delay_sec
-      jsr _lcd_clear
-;      jsr _lcd_newline
+;      jsr _lcd_clear
+      jsr _lcd_newline
       jsr _run_shell
       ; Disable interrupt processing during init
       sei 
@@ -129,5 +130,5 @@ shell_connected:
       .asciiz "Eunice <---> Mac"
 msg_no_acia:
     .asciiz "No serial"
-msg_has_acia:
-    .asciiz "Serial connected"          
+;msg_has_acia:
+;    .asciiz "Serial connected"          

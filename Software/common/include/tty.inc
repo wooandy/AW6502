@@ -9,6 +9,7 @@
         .import _tty_write_dec
         .import _tty_send_newline
         .import _tty_send_character
+        .import tty_write_byte
 
         .macro tty_read_line buffer, buffer_size
         pha

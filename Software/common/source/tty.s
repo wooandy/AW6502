@@ -16,6 +16,7 @@
         .export _tty_write_dec
         .export _tty_send_newline
         .export _tty_send_character
+        .export tty_write_byte
 
 TTY_CONFIG_INPUT_SERIAL   = %00000001
 TTY_CONFIG_INPUT_KEYBOARD = %00000010
@@ -315,7 +316,9 @@ _tty_send_character:
         ; write_acia #acia_newline
         ; pull_ptr ptr1
         tya
-        jsr _acia_write_byte
+        cmp #(LF)
+        beq @newline
+        jsr _acia_write_byte      
 @skip_serial:
         lda tty_config
         and #(TTY_CONFIG_OUTPUT_LCD)
@@ -342,7 +345,10 @@ _tty_send_character:
         jsr _lcd_newline
         tya 
         ply
-        rts        
+        rts       
+@newline:
+        jsr _tty_send_newline   
+ ;       write_acia #acia_newline        
 @ignore_linefeed:
         TYA
         ply

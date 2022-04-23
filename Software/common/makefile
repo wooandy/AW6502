@@ -98,8 +98,8 @@ endif
 COMMON_ROOT=../../common
 COMMON_INCLUDE_FOLDER=$(COMMON_ROOT)/include
 COMMON_SOURCE_FOLDER=$(COMMON_ROOT)/source
-BAS_ROOT=../../load
-BAS_SOURCE_FOLDER=../../load/22_msbasic/msbasic.s
+# BAS_ROOT=../../load
+# BAS_SOURCE_FOLDER=msbasic/msbasic.s
 
 BASE_LIBRARY=$(COMMON_ROOT)/none.lib
 
@@ -122,7 +122,7 @@ COMMON_SOURCES=syscalls.s	\
 							parse.s       \
 							menu.s        \
 							sd.s          \
-							$(BAS_SOURCE_FOLDER)
+							msbasic.s
 
 
 COMMON_OBJECTS=$(COMMON_SOURCES:%.s=$(COMMON_BUILD_FOLDER)/%.o)

@@ -4,7 +4,8 @@
       .include "acia.inc"
       .include "keyboard.inc"
       .include "syscalls.inc"
-      .export _start_msbasic
+      .include "sd.inc"
+ ;     .export _start_msbasic
       
 .segment "CODE"
 ; ISCNTC:
@@ -130,7 +131,7 @@ NotCTRLC:
 ;   RTS
 
 StartupMessage:
-	.byte	$0C,"Cold [C] or warm [W] start?",$0D,$0A,$00
+	.byte	$0C,"Cold start start [C] or warm [W] start?",$0D,$0A,$00
 
 Backspace:
   .byte $1B,"[D ",$1B,"[D",$00
@@ -139,6 +140,7 @@ ms_basic:
   .asciiz "Microsoft BASIC"
 
 LOAD:
+    jsr _sd_read
 	RTS
 	
 SAVE:

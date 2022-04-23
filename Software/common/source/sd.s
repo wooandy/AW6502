@@ -4,6 +4,12 @@
       .include "libfat32.s"
       .include "zeropage.inc"
       .include "utils.inc"
+      .include "keyboard.inc"
+      .include "sysram_map.inc"
+      .include "sys_const.inc"
+      .include "acia.inc"
+;      .import TXTPTR
+;      .import INPUTBUFFER
       
       .export _sd_init
       .export _sd_read
@@ -26,6 +32,7 @@ fat32_workspace = $200      ; two pages (was $200)
 buffer = $400   ; was $400
 
 
+
 subdirname:
   .asciiz "SUBFOLDR   "
 filename:
@@ -40,10 +47,12 @@ memory_pointer:   .res 2
 _sd_init:
   write_lcd #SD_initializing
   jsr sd_init
-  write_lcd #FAT32_initializing
-  lda #02
-  jsr _delay_sec
-  jsr _lcd_clear
+  jsr _lcd_newline
+;  write_lcd #FAT32_initializing
+;  jsr _lcd_newline
+ ; lda #02
+ ; jsr _delay_sec
+ ; jsr _lcd_clear
   jsr fat32_init
  ; bcc initsuccess
   RTS
@@ -102,28 +111,25 @@ foundfile:
     ; Dump data to LCD
 
 ;  jsr lcd_cleardisplay
-;  lda #$00
-;  sta $1000
-;  lda #$10
-;  sta $1001
+
+ ; ldy #0
+ ; lda buffer, y
+ ; sta memory_pointer
+ ; iny
+ ; lda buffer, y
+ ; sta memory_pointer+1
+ ; iny
   ldy #0
-  lda buffer, y
-  sta memory_pointer
-  iny
-  lda buffer, y
-  sta memory_pointer+1
-  iny
-;  ldy #0
+  phx 
+  ldx keyboard_rptr
 @printloop:
   lda buffer,y
-;  jsr _lcd_print_char
-  sta (memory_pointer)
-  inc memory_pointer
-;  jsr _tty_send_character
-;   jsr _lcd_print_char
-
+  sta keyboard_buffer,y
+  jsr tty_write_byte
   iny
-
+  inx
+  stx keyboard_rptr
+  
 ;  cpy #16
 ;  bne @not16
 ;  jsr lcd_setpos_startline1
@@ -141,6 +147,7 @@ foundfile:
 ;  jsr _tty_send_newline
 ;  lda #01
 ;  jsr _delay_sec
+  plx
   rts
   
 ;@loop:
@@ -237,6 +244,7 @@ initialized:
 ;  lda #'Y'
 ;  jsr _lcd_print_char
 ;  write_lcd #SD_initialized
+;  jsr _lcd_newline
 ;  lda #02
 ;  jsr _delay_sec
 ;  jsr _lcd_clear
@@ -247,9 +255,10 @@ initfailed:
 ;  lda #'X'
 ;  jsr _lcd_print_char
   write_lcd #SD_not_initialized
-  lda #02
-  jsr _delay_sec
-  jsr _lcd_clear
+  jsr _lcd_newline
+;  lda #01
+;  jsr _delay_sec
+;  jsr _lcd_clear
 @loop:
   jmp @loop
 
@@ -493,6 +502,6 @@ SD_initialized:
     .asciiz "SD initialized"    
 SD_not_initialized:
     .asciiz "SD not initialized"       
-FAT32_initializing:
-    .asciiz "Initializing FAT32..."   
+;FAT32_initializing:
+;    .asciiz "Initializing FAT32..."   
         
